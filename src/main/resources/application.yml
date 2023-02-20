@@ -1,9 +1,3 @@
-configuration:
-  server:
-    host: localhost
-    port: 9091
-    cache:
-      timeSafety: 10
 spring:
   profiles:
     active: local
@@ -11,13 +5,23 @@ spring:
   kafka:
     consumer:
       group-id: demo-group-id
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      enable-auto-commit: on
     security:
-      protocol: "PLAINTEXT"
-    bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+      protocol: ${PROTOCOL:PLAINTEXT}
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:29092,localhost:39092,localhost:49092}
+    admin:
+      ssl:
+        trust-store-location: ${TRUSTSTORE_LOCATION:}
+        trust-store-password: ${KAFKA_SSL_TRUSTSTORE_PASSWORD:}
+        key-password: ${KAFKA_SSL_KEY_PASSWORD:}
+        key-store-password: ${KAFKA_SSL_KEYSTORE_PASSWORD:}
+        key-store-location: ${KEYSTORE_LOCATION:}
+
+topic:
+  name: ${TOPIC_NAME:asdasdasd}
+  findStr: ${TOPIC_FIND:asdasdasd}
 
 logging:
   level:
