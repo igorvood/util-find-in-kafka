@@ -8,7 +8,6 @@ data class KafkaData(
     val timestamp: Long,
     val value: String?,
     val topic: String?,
-    val identity: Identity
 ) {
 
 }
