@@ -12,6 +12,7 @@ import org.springframework.kafka.listener.ContainerProperties
 import ru.vood.kafkatracer.appProps.TopicProp
 import ru.vood.kafkatracer.request.meta.cache.KafkaMessageListener
 import ru.vood.kafkatracer.request.meta.cache.dto.KafkaData
+import java.util.UUID
 
 @Configuration
 class KafkaConfiguration {
@@ -21,6 +22,9 @@ class KafkaConfiguration {
     @Bean
     fun consumerFactory(kafkaProperties: KafkaProperties): ConsumerFactory<String, String> {
         val buildConsumerProperties = kafkaProperties.buildConsumerProperties()
+        println(kafkaProperties.consumer.groupId)
+        kafkaProperties.consumer.groupId=UUID.randomUUID().toString()
+        println(kafkaProperties.consumer.groupId)
         return DefaultKafkaConsumerFactory(buildConsumerProperties)
     }
 
@@ -34,7 +38,6 @@ class KafkaConfiguration {
         val listenerContainer: ConcurrentMessageListenerContainer<String, String> =
             ConcurrentMessageListenerContainer(cnsFactory, containerProperties)
         listenerContainer.isAutoStartup = false
-
         // bean name is the prefix of kafka consumer thread name
         listenerContainer.setBeanName("kafka-message-listener-$topic")
 
