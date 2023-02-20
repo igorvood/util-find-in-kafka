@@ -8,9 +8,9 @@ then
 else
   echo "Failure: Compile" >&2
   exit 1
-#fi
-#
-#java -jar -Dspring.profiles.active=drop ./target/migration-sql-1.0.2.jar > 2_drop.log
+fi
+
+java -jar -DBOOTSTRAP_SERVERS=localhost:29092,localhost:39092,localhost:49092 ./build/libs/kafka-tracer-0.0.1-SNAPSHOT.jar > log.log
 #
 #if [ $? -eq 0 ]
 #then

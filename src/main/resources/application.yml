@@ -4,14 +4,14 @@ spring:
   #    active: stand
   kafka:
     consumer:
-      group-id: ${GROUP_ID:demo-group-id}
+      group-id: ${GROUP_ID:demo-group-id11}
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       enable-auto-commit: false
     security:
       protocol: ${PROTOCOL:PLAINTEXT}
-    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:29092,localhost:39092,localhost:49092}
+    bootstrap-servers: ${BOOTSTRAP_SERVERS}
     admin:
       ssl:
         trust-store-location: ${TRUSTSTORE_LOCATION:}
