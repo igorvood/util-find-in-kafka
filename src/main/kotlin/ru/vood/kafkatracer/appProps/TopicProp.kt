@@ -7,5 +7,5 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConfigurationProperties(prefix = "topic")
 data class TopicProp(
     val name: String,
-    val findStr: Int,
+    val findStr: String,
 )

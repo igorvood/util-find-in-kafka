@@ -9,11 +9,14 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.AbstractMessageListenerContainer
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer
 import org.springframework.kafka.listener.ContainerProperties
+import ru.vood.kafkatracer.appProps.TopicProp
 import ru.vood.kafkatracer.request.meta.cache.KafkaMessageListener
 import ru.vood.kafkatracer.request.meta.cache.dto.KafkaData
 
 @Configuration
 class KafkaConfiguration {
+
+
 
     @Bean
     fun consumerFactory(kafkaProperties: KafkaProperties): ConsumerFactory<String, String> {
@@ -22,16 +25,14 @@ class KafkaConfiguration {
     }
 
     @Bean
-    @Scope("prototype")
     fun kafkaListenerFactory1(
-        topic: String,
-        messageApplyFun: (KafkaData) -> Unit,
-        cnsFactory: () -> ConsumerFactory<String, String>
+        topic: TopicProp,
+        cnsFactory: ConsumerFactory<String, String>
     ): AbstractMessageListenerContainer<String, String> {
-        val containerProperties = ContainerProperties(topic)
-        containerProperties.messageListener = KafkaMessageListener(messageApplyFun)
+        val containerProperties = ContainerProperties(topic.name)
+        containerProperties.messageListener = KafkaMessageListener(topic)
         val listenerContainer: ConcurrentMessageListenerContainer<String, String> =
-            ConcurrentMessageListenerContainer(cnsFactory(), containerProperties)
+            ConcurrentMessageListenerContainer(cnsFactory, containerProperties)
         listenerContainer.isAutoStartup = false
 
         // bean name is the prefix of kafka consumer thread name

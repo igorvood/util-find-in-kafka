@@ -20,8 +20,8 @@ spring:
         key-store-location: ${KEYSTORE_LOCATION:}
 
 topic:
-  name: ${TOPIC_NAME:asdasdasd}
-  findStr: ${TOPIC_FIND:asdasdasd}
+  name: ${TOPIC_NAME:dev__dko_uasp__card_agreement_converted}
+  findStr: ${TOPIC_FIND:global_id}
 
 logging:
   level:
